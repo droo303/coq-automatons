@@ -1,5 +1,5 @@
 # coq-automatons
-School project for describtion of finite automata in coq
+School project for description of finite automata in coq
 
 ### Files structure
 `BaseDefinitions` contains definitions of concepts needed for work with automatons
