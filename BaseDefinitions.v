@@ -1,4 +1,3 @@
-Module BaseDefinitions.
 
 (* Alphabet is Set of characters *)
 Definition Alphabet := Set.
@@ -17,8 +16,7 @@ Definition Language (Sigma : Alphabet):= Word Sigma -> Prop.
 Definition LangIntersection (Sigma : Alphabet) (L1 L2:Language Sigma):=
   fun w: Word Sigma => L1 w /\ L2 w. 
 
+(* Unification of languages *)
 Definition LangUnification (Sigma : Alphabet) (L1 L2: Language Sigma):=
   fun w: Word Sigma => L1 w \/ L2 w.  
- 
-End BaseDefinitions.
 

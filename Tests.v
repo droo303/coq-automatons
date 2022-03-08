@@ -1,6 +1,5 @@
-Add LoadPath "./" as Cpdt.
-
-Require Import BaseDefinitions.v
+From automatons Require Import BaseDefinitions.
+From automatons Require Import Automaton.
 
 (* Concat test *)
 Section ConcatTest.
@@ -44,3 +43,15 @@ Variable l_cd:Language cd_alpha.
 Compute LangUnification ab_alpha l_ab l_ab w_ab. 
 
 End LangUnificationTest.
+
+Section Automaton.
+
+Variable Q : Set.
+Variable Sigma : Alphabet.
+Variable delta : Q -> Sigma -> Q.
+Variable q0 : Q.
+Variable F : Q -> bool.
+
+Variable a : Automaton = Build_Automaton (Q,Sigma,delta,q0,F).
+
+End Automaton.
