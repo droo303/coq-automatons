@@ -50,8 +50,13 @@ match w with
 end.
 *)
 
-(* Aut intersection *) (* Pokud slovo prijima A1 i A2 *)
-(* Definition aut_intersection (Sigma: Alphabet) (A1 A2: DFA Sigma) : DFA Sigma := *)
+(* DFA intersection *)
+Definition aut_intersection (Sigma: Alphabet) (A1 A2: DFA Sigma) : DFA Sigma := 
+createDFA Sigma 
+(A1.(dfa_states) * A2.(dfa_states)) 
+(A1.(dfa_trans) -> A2.(dfa_trans)) 
+(A1.(dfa_end) A2.(dfa_end) .
+
 
 Theorem aut_intersection : forall a1 DFA, a2: DFA.
 
