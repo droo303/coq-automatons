@@ -8,4 +8,4 @@ School project for description of finite automata in coq
 
 `Tests` contains simple tests
 
-###
+For proper function of imports you need to compile the files first with `make`
