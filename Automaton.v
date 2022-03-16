@@ -26,41 +26,51 @@ Notation "x :: l" := (cons x l)(at level 60, right associativity).
 Notation "[ ]" := nil.
 Notation "[ x ; .. ; y ]" := (cons x .. (cons y nil) ..).
 
+(* Define transition function *)
+Section Transition.
 
-(* DFA -> Word -> Q1 -> Q2 *)
-(* Definition move (Sigma: Alphabet)(auto: DFA Sigma)(w: Word Sigma)(Q: Set) : Q :=
-auto.(dfa_trans) Q
-.
-*)
+Variable Sigma: Alphabet.
+Variable Automaton: DFA Sigma.
 
-(* Moved DFA *)
-(* Fixpoint move (Sigma: Alphabet)(auto: DFA Sigma)(w: Word Sigma) : DFA Sigma :=
+(* Transition to state by word, q - starting state *)
+Fixpoint Transition (q: Automaton.(dfa_states Sigma))(w: Word Sigma) : Automaton.(dfa_states Sigma) :=
 match w with
-| nil => auto
-| h :: t => (createDFA Sigma auto.(dfa_states) auto.(dfa_trans) auto.(dfa_q0) -> auto.(dfa_trans) auto.(dfa_end))
-end. *)
-
-(* Fixpoint accepts_word {Sigma: Alphabet}(auto: DFA Sigma)(w: Word Sigma)(Q: Set) : Q :=
-match w with
-| nil => False 
-| h::t => match dfa_end h with
-            | bool  => True
-            | false => accepts_word (auto, t, dfa_trans Q)
-          end
+| nil => q
+| h::t => 
+        let q':= Automaton.(dfa_trans Sigma) q h 
+        in  Transition q' t
 end.
-*)
 
-(* DFA intersection *)
-Definition aut_intersection (Sigma: Alphabet) (A1 A2: DFA Sigma) : DFA Sigma := 
-createDFA Sigma 
-(A1.(dfa_states) * A2.(dfa_states)) 
-(A1.(dfa_trans) -> A2.(dfa_trans)) 
-(A1.(dfa_end) A2.(dfa_end) .
+End Transition.
+
+(* Define Accepts word function *)
+Section Accept.
+
+Variable Sigma: Alphabet.
+Variable Automaton: DFA Sigma.
+
+Definition Accepts_word (w: Word Sigma) : bool :=
+let q0 := dfa_q0 Sigma Automaton in
+  let q' := Transition Sigma Automaton q0 w
+  in Automaton.(dfa_end Sigma) q'.
+
+End Accept.
+
+Print Accepts_word.
+(* Define Transition Inductively *)
+Section Transition_Inductive.
+
+Variable Sigma: Alphabet.
+Variable Automaton: DFA Sigma.
+Let Q:= Automaton.(dfa_states Sigma).
+Let delta:= Automaton.(dfa_trans Sigma).
+Variable h t: Word Sigma.
+
+Inductive trans: Q -> Word Sigma -> Q -> Prop :=
+|t_a : forall q, trans q nil q
+|t_b : forall q q' q'' h t, delta q h = q' -> trans q' t q'' -> trans q (h::t) q''
+.
 
 
-Theorem aut_intersection : forall a1 DFA, a2: DFA.
 
-Inductive DFA -> DFA -> Prop
-
-
-(* 1:02 *)
+End Transition_Inductive.
