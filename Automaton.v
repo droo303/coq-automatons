@@ -102,12 +102,11 @@ Let qend_a := Automaton_a.(dfa_end Sigma).
 Let qend_b := Automaton_b.(dfa_end Sigma).
 (* Let qend := qend_a (fst Q) \/ qend_b (snd Q). *)
 
-Definition Union_auto (a: Automaton)(b: Automaton) : Automaton :=
-  createDFA Q delta q0 qend.
-
-
+(* Definition Union_auto (a: Automaton)(b: Automaton) : Automaton :=
+  createDFA Q delta q0 qend. *)
 
 End Union_Automaton.
+
 
 Section Intersection_Automaton.
 
@@ -133,7 +132,30 @@ Let qend_b := Automaton_b.(dfa_end Sigma).
 
 (* Let qend := qend_a (fst Q) /\ qend_b (snd Q). *)
 
-Definition Intersection_auto (a: Automaton)(b: Automaton) : Automaton :=
+(* Definition Intersection_auto (a: Automaton)(b: Automaton) : Automaton :=
   createDFA Q delta q0 qend.
-
+ *)
 End Intersection_Automaton.
+
+
+Section Concatenation_Automaton.
+
+Variable Sigma: Alphabet.
+Variable Automaton_a: DFA Sigma.
+Variable Automaton_b: DFA Sigma.
+
+Let Q_a := Automaton_a.(dfa_states Sigma).
+Let Q_b := Automaton_b.(dfa_states Sigma).
+Let Q := Q_a + Q_b.
+
+Variable delta : Q -> Sigma -> Q. 
+
+Let q0_a := Automaton_a.(dfa_q0 Sigma).
+Let qend_b := Automaton_b.(dfa_end Sigma).
+
+Check createDFA.
+
+(* Definition Concatenation_auto : DFA Sigma :=
+  createDFA Sigma Q delta q0_a qend_b. *)
+
+End Concatenation_Automaton.
